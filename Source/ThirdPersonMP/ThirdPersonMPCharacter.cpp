@@ -164,6 +164,10 @@ void AThirdPersonMPCharacter::GetLifetimeReplicatedProps(TArray <FLifetimeProper
 
 void AThirdPersonMPCharacter::OnHealthUpdate()
 {
+	FString healthMessageAll = FString::Printf(TEXT("%s now has %f health remaining. IsLocallyControlled=%i  GetLocalRole= %i"),
+		*GetFName().ToString(), CurrentHealth, (int)IsLocallyControlled(), (int)GetLocalRole());
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, IsLocallyControlled()? FColor::Red : FColor::Blue, healthMessageAll);
+
 	//Client-specific functionality
 	if (IsLocallyControlled())
 	{
@@ -237,4 +241,20 @@ void AThirdPersonMPCharacter::HandleFire_Implementation()
 	spawnParameters.Owner = this;
 
 	AThirdPersonMPProjectile* spawnedProjectile = GetWorld()->SpawnActor<AThirdPersonMPProjectile>(spawnLocation, spawnRotation, spawnParameters);
+}
+
+// Called when the game starts or when spawned
+void AThirdPersonMPCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+
+	if (GEngine)
+	{
+		// Put up a debug message for five seconds. The -1 "Key" value (first argument) indicates that we will never need to update or refresh this message.
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("We are using AThirdPersonMPCharacter."));
+
+		FString healthMessage = FString::Printf(TEXT("%s now has %f health remaining. IsLocallyControlled=%i  GetLocalRole= %i"), 
+			*GetFName().ToString(), CurrentHealth, (int)IsLocallyControlled(), (int)GetLocalRole());
+		GEngine->AddOnScreenDebugMessage(-1, 50.f, FColor::Blue, healthMessage);
+	}
 }

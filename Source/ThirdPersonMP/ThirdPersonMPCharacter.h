@@ -128,5 +128,9 @@ protected:
 
 	/** A timer handle used for providing the fire rate delay in-between spawns.*/
 	FTimerHandle FiringTimer;
+
+	protected:
+	// Called when the game starts or when spawned
+	virtual void BeginPlay() override;
 };
 
