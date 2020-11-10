@@ -2,6 +2,9 @@ Binaries
 DerivedDataCache
 Intermediate
 Saved
+Managed
+bin
+obj
 .vscode
 .vs
 *.VC.db
