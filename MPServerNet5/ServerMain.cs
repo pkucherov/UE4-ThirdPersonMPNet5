@@ -1,14 +1,19 @@
 ﻿using System;
 using System.Drawing;
 using UnrealEngine.Framework;
+using UnrealEngine.Tests;
 
 namespace MPServerNet5
 {
 	public static class Main
 	{ // Indicates the main entry point for automatic loading by the plugin
 		public static void OnWorldBegin() => Debug.AddOnScreenMessage(-1, 10.0f, Color.DeepPink, "Hello123, Unreal Engine!");
-
-		public static void OnWorldPostBegin() => Debug.AddOnScreenMessage(-1, 10.0f, Color.DeepPink, "How's it going123?");
+		private static StaticMeshesTest staticMeshesTest;
+		public static void OnWorldPostBegin()
+		{
+			Debug.AddOnScreenMessage(-1, 10.0f, Color.DeepPink, "OnWorldPostBegin");
+			staticMeshesTest.OnBeginPlay();
+		}
 
 		public static void OnWorldEnd() => Debug.AddOnScreenMessage(-1, 10.0f, Color.DeepPink, "See you soon, Unreal Engine!");
 
